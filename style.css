@@ -1,0 +1,21 @@
+
+body {
+    background-image: url("tunnel.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment:fixed;
+    background-size: cover;
+}
+.panel-default{
+    background: transparent;
+}
+.panel-default .panel-heading{
+    background: transparent;
+}
+.panel-default .panel-body{
+   background: #fff;
+}
+h2 {
+  font-family: "Times New Roman", Times, serif;
+  font-weight: normal;
+}

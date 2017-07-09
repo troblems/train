@@ -1,4 +1,3 @@
-<src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js">
 
   // Initialize Firebase
   var config = {
@@ -12,23 +11,48 @@
   firebase.initializeApp(config);
   var database = firebase.database();
 
-  // 2. Button for adding trains
-  $("#add-train-btn").on("click", function(event) {
-    event.preventDefault();
+//storing variables for later use
+var name = "";
+var dest = "";
+var time = 0;
+var freq = 0;
 
-    // Grabs user input
-    var trainName = $("#train-name-input").val().trim();
-    var dest = $("#dest").val().trim();
-    var firstTime = moment($("#start-input").val().trim(), "DD/MM/YY").format("X");
-    var freq = $("#rate-input").val().trim();
+//capture button click
+$("#addTrain").on("click",function(){
 
-    // Creates local "temporary" object for holding new train
-    var newTrain = {
-      name: trainName,
-      role: dest,
-      start: firstTime,
-      rate: freq
-    };
-  }
-  // Uploads train data to the database
-  database.ref().push(newTrain);
+  //prevents page refresh
+  event.preventDefault();
+
+  //logic for storing and retrieving user input
+  name = $("#nameForm").val().trim();
+  dest = $("#destForm").val().trim();
+  time = $("#timeForm").val().trim();
+  freq = $("#freqForm").val().trim();
+
+  firebase.database().ref().push({
+    name:name,
+    dest:dest,
+    time:time,
+    freq:freq
+});
+});
+
+firebase.database().ref().on("child_added",function(snapshot){
+  $("#nameForm").html(snapshot.val().name);
+  $("#destForm").html(snapshot.val().dest);
+  $("#timeForm").html(snapshot.val().time);
+  $("#freqForm").html(snapshot.val().freq);
+
+
+  //log all of the things
+  console.log(snapshot.val());
+  console.log(snapshot.val().name);
+  console.log(snapshot.val().dest);
+  console.log(snapshot.val().time);
+  console.log(snapshot.val().freq);
+
+},
+//errors!
+function(errorObject) {
+  console.log("Errors handled: " + errorObject.code);
+});
