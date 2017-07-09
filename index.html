@@ -23,7 +23,7 @@
 
     <div class="row">
       <div class="col-md-12">
-        <div class="panel panel-default">
+        <div class="panel panel-primary">
           <div class="panel-heading">
             <h3 class="panel-title">Add Train</h3>
           </div>
@@ -51,17 +51,27 @@
         </div>
       </div>
       <div class="col-md-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">Current Schedule</h3>
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title"><strong>Current train schedule</strong></h3>
+            </div>
+            <div class="panel-body">
+              <table class="table table-hover" id='employee-table'>
+                <thead>
+                  <tr>
+                    <th>Train Name</th>
+                    <th>Destination</th>
+                    <th>Frequency (mins)</th>
+                    <th>Next arrival</th>
+                    <th>Minutes away</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
           </div>
-          <div class="panel-body" id = "trains">
-            <h2 id="nameForm">Circle Line</h2>
-            <h2 id="destForm">Hammersmith</h2>
-            <h2 id="timeForm">0910</h2>
-            <h2 id="freqForm">10</h2>
 
-          </div>
         </div>
       </div>
     </div>
@@ -95,14 +105,13 @@
         // Don't refresh the page!
         event.preventDefault();
 
-        // YOUR TASK!!!
-        // Code in the logic for storing and retrieving the most recent user.
-        // Don't forget to provide initial data to your Firebase database.
+        //grabbing user input
         name = $("#nameForm").val().trim();
         dest = $("#destForm").val().trim();
-        time = $("#timeForm").val().trim();
+        time = moment($('#timeForm').val().trim(), "HH:mm").format("");
         freq = $("#freqForm").val().trim();
 
+          //making temp objects
         database.ref().push({
           name: name,
           dest: dest,
@@ -113,7 +122,14 @@
       });
 
       // Firebase watcher + initial loader HINT: .on("value")
-      database.ref().on("child_added", function(snapshot) {
+      database.ref().on("child_added", function(childSnapshot, prevChildKey) {
+
+        console.log(childSnapshot.val());
+
+        var name = childSnapshot.val().name;
+        var dest = childSnapshot.val().dest;
+        var time = childSnapshot.val().time;
+        var freq = childSnapshot.val().freq;
 
         // Log everything that's coming out of snapshot
         console.log(snapshot.val());
@@ -132,6 +148,15 @@
       }, function(errorObject) {
         console.log("Errors handled: " + errorObject.code);
       });
+
+        //current time for later use
+      var timeNow = moment();
+
+      //variable for past start of Unix time
+      var pastTime = moment().diff(moment.unix(time, "X"), "months");
+
+      //difference between the two
+      //var difference =
       </script>
 
       </body>
