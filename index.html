@@ -170,9 +170,9 @@
     var nextTrainInMins = moment(nextTrain).format("hh:mm a");
 
     //Oh god, this calculation. Appending it to table.
-    $("#currentTrains > tbody").append("<tr><td>" + name + "</td><td>" + dest + "</td><td>" + "Every " + freq + " minutes" + "</td><td>" + nextTrainInMins + "</td><td>" + timeUntilTrain + "</td></tr>");
+    $("#currentTrains").append("<tr><td>" + name + "</td><td>" + dest + "</td><td>" + "Every " + freq + " minutes" + "</td><td>" + nextTrainInMins + "</td><td>" + timeUntilTrain + "</td></tr>");
 
-  
+
   </script>
 
 </body>
