@@ -157,7 +157,7 @@
     var pastTime = moment().diff(moment.unix(time, "X"), "months");
 
     //difference between the two
-    var difference = moment().diff(moment(firstTime), "minutes");
+    var difference = moment().diff(moment(time), "minutes");
 
     //devide the two with a remainder
     var timeRemainder = difference % freq;
